@@ -1,5 +1,7 @@
 generator client {
   provider = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
+
 }
 
 datasource db {
@@ -9,22 +11,32 @@ datasource db {
 
 model Usuario {
   id                 String             @id @default(cuid())
-  username           String             @unique
-  name               String
-  email              String?            @unique
+  username           String?             @unique
+  name               String?
+  idade              Int?
+  email              String            @unique
+  password            String
   imageProfile       String?
-  sexo               Sexo
-  postagens          Postagem[]
+  genero              Genero?
   bio                String?
   localizacao        String?
   telefone           String?
-  curtidasPostagens  CurtidasPostagem[] @relation(name: "CurtidasDePostagem")
-  curtidasDePerfil   CurtidasPerfil[]   @relation(name: "CurtidasDePerfil")
-  perfisCurtidos     CurtidasPerfil[]   @relation(name: "PerfisCurtidos")
-  convitesRealizados Encontro[]         @relation("EncontrosUsuario1")
-  convitesRecebidos  Encontro[]         @relation("EncontrosUsuario2")
+  sessions            Sessions[]
+  postagens          Postagem[]
+  comentarios        Comentario[]
+  curtidas           Like[]
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+}
+
+model Sessions {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String
+  expiresAt DateTime
+  valid     Boolean
+  createdAt DateTime @default(now())
+  User      Usuario     @relation(fields: [userId], references: [id])
 }
 
 model Postagem {
@@ -32,54 +44,32 @@ model Postagem {
   userId      String
   user        Usuario            @relation(fields: [userId], references: [id])
   conteudo    String
-  image       String
+  image       String?
   qtdCurtidas Int
-  quemCurtiu  CurtidasPostagem[]
+  qtdDescurtidas Int
+  comentarios Comentario[]
+  curtidas    Like[]
   published   Boolean            @default(false)
   createdAt   DateTime           @default(now())
 }
 
-model CurtidasPostagem {
-  id     String   @id @default(cuid())
-  userId String
-  user   Usuario  @relation(name: "CurtidasDePostagem", fields: [userId], references: [id])
-  postId String
-  post   Postagem @relation(fields: [postId], references: [id])
+model Comentario {
+  id          String             @id @default(cuid())
+  userId      String
+  user        Usuario            @relation(fields: [userId], references: [id])
+  postId      String
+  post        Postagem            @relation(fields: [postId], references: [id])
 }
 
-model CurtidasPerfil {
-  id        String   @id @default(cuid())
-  userId    String
-  user      Usuario  @relation(name: "CurtidasDePerfil", fields: [userId], references: [id])
-  perfilId  String
-  perfil    Usuario  @relation(name: "PerfisCurtidos", fields: [perfilId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Like {
+  id          String             @id @default(cuid())
+  userId      String
+  user        Usuario            @relation(fields: [userId], references: [id])
+  postId      String
+  post        Postagem            @relation(fields: [postId], references: [id])
 }
 
-model Encontro {
-  id          String   @id @default(cuid())
-  titulo      String
-  descricao   String?
-  dataHora    DateTime
-  localizacao String?
-  usuario1Id  String
-  usuario1    Usuario  @relation("EncontrosUsuario1", fields: [usuario1Id], references: [id])
-  usuario2Id  String
-  usuario2    Usuario  @relation("EncontrosUsuario2", fields: [usuario2Id], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@unique([usuario1Id, usuario2Id]) 
-}
-
-enum Sexo {
-  FEMININO
-  MASCULINO
-}
-
-enum StatusEncontro {
-  ENVIADO
-  CONFIRMADO
-  REJEIRADO
+enum Genero {
+  Masculino
+  Feminino @map("Feminino")
 }
