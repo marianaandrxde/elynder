@@ -13,13 +13,6 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -31,10 +24,7 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import axios, { AxiosHeaders } from "axios";
 import { redirect } from "next/navigation";
-import UsuarioProfileSection from "@/app/users/user-profile-section"
 import { headers } from "next/headers";
-import { NextResponse } from "next/server"
-import { cn } from "@/lib/utils"
 
 interface UserSession {
   session: {
@@ -76,11 +66,11 @@ export default async function Page() {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                href="#"
+                href={`/usuarios/${userId}`}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground text-white transition-all hover:text-primary"
               >
                 <Home className="h-4 w-4 text-white" />
-                Página inicial
+                Meu perfil
               </Link>
               <Link
                 href="#"
@@ -165,22 +155,7 @@ export default async function Page() {
                   Me curtiram
                 </Link>
               </nav>
-              <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
+
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
@@ -213,8 +188,7 @@ export default async function Page() {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-        <UsuarioProfileSection usuarioId={userId} />
-          {/* <div className="flex items-center">
+          <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Feed</h1>
           </div>
           <div
@@ -225,13 +199,14 @@ export default async function Page() {
                 Você não tem conexões
               </h3>
               <p className="text-sm text-muted-foreground">
-              Você pode começar .
+              Você pode começar curtindo perfis.
               </p>
               <Button className="mt-4 bg-rose-900">Criar perfil</Button>
             </div>
-          </div> */}
+          </div>
         </main>
       </div>
     </div>
   )
 }
+

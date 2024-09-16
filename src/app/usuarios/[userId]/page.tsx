@@ -1,12 +1,13 @@
 import { getUsuarioById } from "@/app/actions/user-actions";
+import { AddButton } from "@/components/ui/add-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UsuarioProfileSection from "@/app/users/user-profile-section";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	ClipboardIcon,
 	LoaderPinwheel,
 
 } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -51,9 +52,9 @@ export default async function Page({
 								<div className="flex flex-col gap-2">
 									<span className="text-3xl font-bold">{usuario.email}</span>
 									<div className="flex items-baseline text-muted-foreground gap-1">
-										<span className="truncate">tag:</span>
+										<span className="truncate">email:</span>
 										<span className="text-sm font-semibold ">{usuario.email}</span>
-										<span> | gender:</span>
+										<span> | email:</span>
 										<span className="text-sm font-semibold ">
 											{usuario.email}
 										</span>
@@ -62,6 +63,9 @@ export default async function Page({
 							</header>
 						</Suspense>
 					</Tabs>
+					<Link href={`/usuarios/${usuario.id}/add`}>
+					<AddButton text="Editar perfil" />
+					</Link>		
 				</div>
 			</div>
 		</section>

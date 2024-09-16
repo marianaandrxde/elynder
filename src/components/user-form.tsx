@@ -18,11 +18,6 @@ import {
 } from "./ui/form";
 import {Input} from "./ui/input";
 import {RadioGroup, RadioGroupItem} from "./ui/radio-group";
-import {
-    Select,
-    SelectTrigger,
-    SelectValue,
-} from "./ui/select";
 import {useRouter} from "next/navigation";
 import {toast} from "./ui/use-toast"
 type UsuarioProps = {
@@ -47,10 +42,7 @@ const formSchema = z.object({
     username: z
         .string(),
     genero: z
-        .string()
-        .refine((value: any) => Object.values(Genero).includes(value as Genero), {
-            message: "O sexo deve ser Masculino ou Feminino",
-        }),
+        .string(),
     bio: z
         .string()
         ,
@@ -104,7 +96,7 @@ export function UsuarioForm({usuario}: UsuarioProps) {
         });
 
         if(result.success) {
-            router.push(`/usuarios/${usuario?.id}`);
+            router.push(`/usuarios/${usuario?.id}/`);
         }
     }
 
@@ -153,13 +145,13 @@ export function UsuarioForm({usuario}: UsuarioProps) {
                                 >
                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                         <FormControl>
-                                            <RadioGroupItem value="Macho"/>
+                                            <RadioGroupItem value="Masculino"/>
                                         </FormControl>
                                         <FormLabel className="font-normal">Masculino</FormLabel>
                                     </FormItem>
                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                         <FormControl>
-                                            <RadioGroupItem value="Femea"/>
+                                            <RadioGroupItem value="Feminino"/>
                                         </FormControl>
                                         <FormLabel className="font-normal">Feminino</FormLabel>
                                     </FormItem>
@@ -173,19 +165,16 @@ export function UsuarioForm({usuario}: UsuarioProps) {
                 <FormField
                     control={form.control}
                     name="localizacao"
-                    render={({field}) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Localizacao</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Selecione uma espécie"/>
-                                </SelectTrigger>
-                            </Select>
-                            <FormMessage/>
+                            <FormControl>
+                                <Input placeholder="Localizacao" {...field} />
+                            </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
-
                 <FormField
                     control={form.control}
                     name="bio"
