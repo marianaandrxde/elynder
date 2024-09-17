@@ -14,7 +14,7 @@ model Usuario {
   username           String?             @unique
   name               String?
   idade              Int?
-  email              String            @unique
+  email              String            
   password            String
   imageProfile       String?
   genero              Genero?

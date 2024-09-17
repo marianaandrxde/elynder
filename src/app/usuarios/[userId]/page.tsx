@@ -63,9 +63,11 @@ export default async function Page({
 							</header>
 						</Suspense>
 					</Tabs>
-					<Link href={`/usuarios/${usuario.id}/add`}>
-					<AddButton text="Editar perfil" />
-					</Link>		
+					<div className="mt-4">
+							<Link href={`/usuarios/${usuario.id}/edit`}>
+								<AddButton text="Add Animal" />
+							</Link>
+						</div>
 				</div>
 			</div>
 		</section>

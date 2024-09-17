@@ -134,7 +134,7 @@ function RemoveDialog({ usuario }: { usuario: Usuario }) {
     );
 }
 
-function EditDialog({ usuario }: { usuario: Usuario }) {
+export function EditDialog({ usuario }: { usuario: Usuario }) {
     return (
         <>
             <DialogHeader>
@@ -152,13 +152,14 @@ function EditDialog({ usuario }: { usuario: Usuario }) {
                         password: usuario.password,
                         idade: usuario.idade as number,
                         name: usuario.name as string,
+                        imageProfile: usuario.imageProfile as string,
                         genero: usuario.genero ?? 'Feminino',
                         bio: usuario.bio ?? "",
                         localizacao: usuario.localizacao ?? " ",
                         telefone: usuario.telefone ?? " ",
-                    }}
-                />
+                    }}             /> 
             </DialogContent>
         </>
     );
 }
+// // testando  id={""}   

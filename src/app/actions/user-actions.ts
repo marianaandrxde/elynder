@@ -24,10 +24,6 @@ type Result = {
 };
 
 export async function getUsuarioById(id: string) {
-  if (!id) {
-    throw new Error("ID do usuário não fornecido");
-  }
-  
   const usuario = await prisma.usuario.findUnique({
     where: { id },
   });
@@ -77,67 +73,68 @@ export async function removeUsuario(id: string): Promise<Result> {
 }
 
 export async function upsertUsuario({
-  id,
-  username,
-  name,
-  idade,
+	id,
+	username,
+	name,
+	idade,
+  genero,
+  imageProfile,
+	bio,
+	localizacao,
+	telefone,
   email,
   password,
-  imageProfile,
-  genero,
-  bio,
-  localizacao,
-  telefone,
-}: UsuarioData): Promise<Result> {
-  const result: Result = { success: false, message: "" };
+}: UsuarioData) {
+	const result: Result = { success: false, message: "" };
 
-  try {
-    const newUsuario = await prisma.usuario.upsert({
-      where: { id: id ?? "" },
-      update: {
-        username,
-        name,
-        idade,
+	try {
+		const newUsuario = await prisma.usuario.upsert({
+			where: { id: id ?? "" },
+			update: {
+				username,
+				name,
+				idade,
+        genero,
+        imageProfile,
+				bio,
+				localizacao,
+        telefone,
         email,
         password,
-        imageProfile,
+			},
+			create: {
+				username,
+				name,
+				idade,
         genero,
-        bio,
-        localizacao,
-        telefone,
-      },
-      create: {
-        username,
-        name,
-        idade,
+        imageProfile,
+				bio,
+				localizacao,
+				telefone,
         email,
         password,
-        imageProfile,
-        genero,
-        bio,
-        localizacao,
-        telefone,
-      },
-    });
+			},
+		});
 
-    result.success = true;
-    result.message = `Usuário ${newUsuario.name} ${id ? 'atualizado' : 'criado'} com sucesso!`;
+		result.success = true;
+		result.message = `Usuario ${newUsuario.name} criado com sucesso!`;
 
-    revalidatePath("usuarios");
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        result.message = `Usuário ${username} já existe.`;
-      } else {
-        result.message = `Erro ao criar/atualizar usuário: ${error.message}`;
-      }
-    }
+		revalidatePath("/usuarios");
+	} catch (error) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
+			if (error.code === "P2002") {
+				result.message = `Usuario ${name} ja existe`;
+			} else {
+				result.message = `Erro ao criar usuario: ${error.message}`;
+			}
+		}
 
-    console.error(error);
-  }
+		console.error(error);
+	}
 
-  return result;
+	return result;
 }
+
 
 // export async function getPhotos(usuarioId: string) {
 //   const photos = await getPhotosFromS3(usuarioId);

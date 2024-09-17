@@ -22,16 +22,17 @@ import {useRouter} from "next/navigation";
 import {toast} from "./ui/use-toast"
 type UsuarioProps = {
     usuario?: {
-        id: string;
+        id?: string;
         email: string;
         password: string;
-        username: string;
-        name: string;
-        idade: number;
-        genero: Genero;
-        bio: string;
-        localizacao: string;
-        telefone: string;
+        username: string | null;  
+        name: string | null;
+        idade: number | null;
+        genero: Genero | null;
+        bio: string| null;
+        localizacao: string | null;
+        telefone: string | null;
+        imageProfile: string | null;
     };
 };
 
@@ -76,7 +77,7 @@ export function UsuarioForm({usuario}: UsuarioProps) {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const result = await upsertUsuario({
             id: usuario?.id ?? "",
-            name: values.name,
+            name: values.name?? "",
             username: values.username,
             genero: values.genero as Genero,
             bio: values.bio as string,
