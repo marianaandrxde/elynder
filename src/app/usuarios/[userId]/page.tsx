@@ -1,6 +1,8 @@
-import { getUsuarioById } from "@/app/actions/user-actions";
+import { getUsuarioById, removeUsuario } from "@/app/actions/user-actions";
+import { RemoveButton } from "@/components/remove-button";
 import { AddButton } from "@/components/ui/add-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	ClipboardIcon,
@@ -63,13 +65,19 @@ export default async function Page({
 							</header>
 						</Suspense>
 					</Tabs>
-					<div className="mt-4">
+					<div className="flex justify-items-end gap-2">
+						<div className="mt-4">
 							<Link href={`/usuarios/${usuario.id}/edit`}>
-								<AddButton text="Add Animal" />
+								<AddButton text="Editar Usuario" />
 							</Link>
 						</div>
+
+						<div className="mt-4">
+             			 <RemoveButton userId={usuario.id} />
+            			</div>
+					</div>
+					</div>
 				</div>
-			</div>
 		</section>
 	);
 }

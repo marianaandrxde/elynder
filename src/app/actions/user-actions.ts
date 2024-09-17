@@ -64,7 +64,7 @@ export async function removeUsuario(id: string): Promise<Result> {
     result.success = true;
     result.message = "Usuário removido com sucesso!";
 
-    revalidatePath("usuarios");
+    revalidatePath(`/usuarios/${id}`);
   } catch (error) {
     result.message = `Erro ao remover usuário: ${error}`;
   }
@@ -155,3 +155,5 @@ export async function deletePhoto(key: string): Promise<Result> {
 
   return result;
 }
+
+
