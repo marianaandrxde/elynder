@@ -155,5 +155,3 @@ export async function deletePhoto(key: string): Promise<Result> {
 
   return result;
 }
-
-

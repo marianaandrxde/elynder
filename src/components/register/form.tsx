@@ -170,7 +170,7 @@ export function RegisterForm() {
             </div>
           )}
           {formSuccess && (
-            <div className="text-rose-600 mb-4">
+            <div className="text-green-600 mb-4">
               <p className="text-sm font-semibold">
                 Cadastro realizado, redirecionando para o app
               </p>

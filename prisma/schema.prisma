@@ -27,6 +27,8 @@ model Usuario {
   curtidas           Like[]
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+  quemCurti LikeProfile[] @relation("UserLikes")
+  quemCurtiu LikeProfile[] @relation("UserCurtiu")
 }
 
 model Sessions {
@@ -68,6 +70,15 @@ model Like {
   postId      String
   post        Postagem            @relation(fields: [postId], references: [id])
 }
+
+model LikeProfile {
+  id              String   @id @default(cuid())
+  userId          String
+  user            Usuario  @relation("UserLikes", fields: [userId], references: [id])
+  userIdCurtido   String
+  userCurtido     Usuario  @relation("UserCurtiu", fields: [userIdCurtido], references: [id])
+}
+
 
 enum Genero {
   Masculino
