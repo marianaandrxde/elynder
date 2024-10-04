@@ -38,7 +38,6 @@ export async function curtirPerfil(userId: string, userIdCurtido: string): Promi
     const result: Result = { success: false, message: "" };
   
     try {
-      // Verifique se o usuário já foi curtido
       const curtiuAntes = await prisma.likeProfile.findFirst({
         where: {
           userId: userId,
@@ -48,10 +47,8 @@ export async function curtirPerfil(userId: string, userIdCurtido: string): Promi
   
       if (curtiuAntes) {
         result.message = "Você já curtiu este perfil.";
-        return result; // Retorne que o usuário já foi curtido
+        return result;
       }
-  
-      // Se não foi curtido, crie um novo "like"
       await prisma.likeProfile.create({
         data: {
           userId: userId,
