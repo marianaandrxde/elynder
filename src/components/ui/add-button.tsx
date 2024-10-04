@@ -13,7 +13,7 @@ interface AddButtonProps {
 export function AddButton(props: AddButtonProps) {
 	return (
 		<Button
-			className={cn("h-8 py-4 gap-2", props.twClasses)}
+			className={cn("h-8 py-4 gap-2 bg-slate-500", props.twClasses)}
 			onClick={props.onClickFn}
 		>
 			<PlusCircle className="h-4 w-4" />

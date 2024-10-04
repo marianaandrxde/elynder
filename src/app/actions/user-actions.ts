@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import { Genero, Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-type UsuarioData = {
+export type UsuarioData = {
   id: string;
   username?: string;
   name?: string;

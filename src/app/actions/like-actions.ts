@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prismaclient-singleton";
+import prisma from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
